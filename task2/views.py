@@ -15,8 +15,11 @@ MAX_SIZE = 1024 * 1024 * 10
 
 @api_view(['GET'])
 def api_overview(request):
+    """
+    Displays all information about the URL and HTTP methods that are used, describes their operations.
+    """
     api_urls = {
-        'all items': '/api/',
+        'get all items': 'GET /api/',
         'get all images': 'GET /api/images/',
         'get image by id': 'GET /api/images/id/',
         'add new image': 'POST /api/images/',
@@ -29,6 +32,9 @@ def api_overview(request):
 
 
 class ImageAPIView(viewsets.ModelViewSet):
+    """
+    Implementation of task 2.
+    """
     queryset = Image.objects.all()
     serializer_class = ImageSerializer
     http_method_names = ['get', 'post', 'delete']
@@ -49,6 +55,10 @@ class ImageAPIView(viewsets.ModelViewSet):
 
     @staticmethod
     def make_preview_image(image: Image):
+        """
+        Creates a 100*100 pixel preview image in png format and saves it to the database.
+        :param image: Image in any format and size
+        """
         preview_io = io.BytesIO()
 
         with Img.open(image.image) as pil_image:
